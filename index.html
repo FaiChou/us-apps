@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>App Showcase</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+<body class="bg-gray-100 min-h-screen flex flex-col items-center">
+    <div class="container mx-auto px-4 py-8 max-w-4xl">
+        <h1 class="text-3xl font-bold text-center mb-8 text-gray-800">US Apps</h1>
+        <div id="app-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Apps will be dynamically loaded here -->
+        </div>
+    </div>
+
+    <script>
+        // App data - you can modify this array with your apps
+        const apps = [
+            {
+                name: 'Tailscale',
+                storeLink: 'https://apps.apple.com/us/app/tailscale/id1470499037'
+            },
+            {
+                name: 'Longbridge',
+                storeLink: 'https://apps.apple.com/us/app/longbridge/id1470042146'
+            },
+            {
+                name: 'Binance',
+                storeLink: 'https://apps.apple.com/us/app/binance-us-buy-bitcoin-eth/id1492670702'
+            },
+            {
+                name: 'Cash',
+                storeLink: 'https://apps.apple.com/us/app/cash-app/id711923939'
+            },
+            {
+                name: 'ChatGPT',
+                storeLink: 'https://apps.apple.com/us/app/chatgpt/id6448311069'
+            },
+            {
+                name: 'Claude',
+                storeLink: 'https://apps.apple.com/us/app/claude-by-anthropic/id6473753684'
+            },
+            {
+                name: 'Coinbase',
+                storeLink: 'https://apps.apple.com/us/app/coinbase-buy-bitcoin-ether/id886427730'
+            },
+            {
+                name: 'CoinGecko',
+                storeLink: 'https://apps.apple.com/us/app/coingecko-crypto-tracker-nft/id1390323960'
+            },
+            {
+                name: 'Facebook',
+                storeLink: 'https://apps.apple.com/us/app/facebook/id284882215'
+            },
+            {
+                name: 'Futubull',
+                storeLink: 'https://apps.apple.com/us/app/futubull-easy-investment/id592031984'
+            },
+            {
+                name: 'GitHub',
+                storeLink: 'https://apps.apple.com/us/app/github/id1477376905'
+            },
+            {
+                name: 'IBKR',
+                storeLink: 'https://apps.apple.com/us/app/ibkr-mobile-invest-worldwide/id454558592'
+            },
+            {
+                name: 'iFAST GB',
+                storeLink: 'https://apps.apple.com/us/app/ifast-gb/id1634434534'
+            },
+            {
+                name: 'Infuse',
+                storeLink: 'https://apps.apple.com/us/app/infuse-video-player/id1136220934'
+            },
+            {
+                name: 'Jupiter',
+                storeLink: 'https://apps.apple.com/us/app/jupiter-solana-swap-wallet/id6484069059'
+            },
+            {
+                name: 'Kraken',
+                storeLink: 'https://apps.apple.com/us/app/kraken-buy-crypto-bitcoin/id1481947260'
+            },
+            {
+                name: 'MetaMask',
+                storeLink: 'https://apps.apple.com/us/app/metamask-blockchain-wallet/id1438144202'
+            },
+            {
+                name: 'Messenger',
+                storeLink: 'https://apps.apple.com/us/app/messenger/id454638411'
+            },
+            {
+                name: 'NASCTL',
+                storeLink: 'https://apps.apple.com/us/app/transmission-qbremote-nasctl/id1662428698'
+            },
+            {
+                name: 'OKX',
+                storeLink: 'https://apps.apple.com/us/app/okx-buy-bitcoin-btc-crypto/id1327268470'
+            },
+            {
+                name: 'PayPal',
+                storeLink: 'https://apps.apple.com/us/app/paypal-pay-send-save/id283646709'
+            },
+            {
+                name: 'Phantom',
+                storeLink: 'https://apps.apple.com/us/app/phantom-crypto-wallet/id1598432977'
+            },
+            {
+                name: 'Poe',
+                storeLink: 'https://apps.apple.com/us/app/poe-fast-ai-chat/id1640745955'
+            },
+            {
+                name: 'Quantumult X',
+                storeLink: 'https://apps.apple.com/us/app/quantumult-x/id1443988620'
+            },
+            {
+                name: 'RVNC Viewer',
+                storeLink: 'https://apps.apple.com/us/app/realvnc-viewer-remote-desktop/id352019548'
+            },
+            {
+                name: 'Shadowrocket',
+                storeLink: 'https://apps.apple.com/us/app/shadowrocket/id932747118'
+            },
+            {
+                name: 'Slack',
+                storeLink: 'https://apps.apple.com/us/app/slack/id618783545'
+            },
+            {
+                name: 'Solflare',
+                storeLink: 'https://apps.apple.com/us/app/solflare-solana-wallet/id1580902717'
+            },
+            {
+                name: 'Sui Wallet',
+                storeLink: 'https://apps.apple.com/us/app/sui-wallet-mobile/id6476572140'
+            },
+            {
+                name: 'Telegram',
+                storeLink: 'https://apps.apple.com/us/app/telegram-messenger/id686449807'
+            },
+            {
+                name: 'TradingView',
+                storeLink: 'https://apps.apple.com/us/app/tradingview-track-all-markets/id1205990992'
+            },
+            {
+                name: 'Ultra Mobile',
+                storeLink: 'https://apps.apple.com/us/app/telegram-messenger/id686449807'
+            },
+            {
+                name: 'Venmo',
+                storeLink: 'https://apps.apple.com/us/app/venmo/id351727428'
+            },
+            {
+                name: 'WhatsApp',
+                storeLink: 'https://apps.apple.com/us/app/whatsapp-messenger/id310633997'
+            },
+            {
+                name: 'WireGuard',
+                storeLink: 'https://apps.apple.com/us/app/wireguard/id1441195209'
+            },
+            {
+                name: 'Wise',
+                storeLink: 'https://apps.apple.com/us/app/wise-ex-transferwise/id612261027'
+            },
+            {
+                name: 'Zelle',
+                storeLink: 'https://apps.apple.com/us/app/zelle/id1260755201'
+            },
+            {
+                name: 'ZeroTier One',
+                storeLink: 'https://apps.apple.com/us/app/zerotier-one/id1084101492'
+            },
+            {
+                name: '1.1.1.1',
+                storeLink: 'https://apps.apple.com/us/app/1-1-1-1-faster-internet/id1423538627'
+            },
+            {
+                name: 'Coinmarketcap',
+                storeLink: 'https://apps.apple.com/us/app/coinmarketcap-crypto-tracker/id1282107098'
+            },
+            {
+                name: 'Coinbase Wallet',
+                storeLink: 'https://apps.apple.com/us/app/coinbase-wallet-nfts-crypto/id1278383455'
+            },
+            {
+                name: 'Robinhood Investing for All',
+                storeLink: 'https://apps.apple.com/us/app/robinhood-investing-for-all/id938003185'
+            },
+            {
+                name: 'Bybit',
+                storeLink: 'https://apps.apple.com/us/app/bybit-buy-trade-crypto/id1488296980'
+            },
+            {
+                name: 'stripe',
+                storeLink: 'https://apps.apple.com/us/app/stripe-dashboard/id978516833'
+            },
+            {
+                name: 'uniswap',
+                storeLink: 'https://apps.apple.com/us/app/uniswap-crypto-nft-wallet/id6443944476'
+            }
+        ];
+
+        async function renderApps() {
+            const appList = document.getElementById('app-list');
+            
+            for (const app of apps) {
+                const appCard = document.createElement('div');
+                appCard.className = 'bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 cursor-pointer';
+                appCard.innerHTML = `
+                    <a href="${app.storeLink}" target="_blank" class="block p-4">
+                        <div class="flex items-center">
+                            <h2 class="text-lg font-semibold text-gray-800">${app.name}</h2>
+                        </div>
+                    </a>
+                `;
+                
+                appList.appendChild(appCard);
+            }
+        }
+
+        // Initialize app rendering when page loads
+        document.addEventListener('DOMContentLoaded', renderApps);
+    </script>
+</body>
+</html>
